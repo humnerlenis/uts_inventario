@@ -5,7 +5,7 @@
         <span class="eyebrow">Error 404</span>
         <h2>Página no encontrada</h2>
         <p>La ruta solicitada no existe o fue eliminada.</p>
-        <a class="btn btn-primary" href="<?= url('inventario') ?>">Volver al inicio</a>
+        <a class="btn btn-primary" href="<?= redUrl('dispositivos/index') ?>">Volver al inicio</a>
     </div>
 </section>
 

@@ -7,7 +7,7 @@ class App
         $url = $this->resolveUrl();
         $segments = array_values(array_filter(explode('/', $url), static fn ($segment) => $segment !== ''));
 
-        $controllerName = $segments[0] ?? 'Inventario';
+        $controllerName = $segments[0] ?? 'Dispositivos';
         $method = $segments[1] ?? 'index';
         $params = array_slice($segments, 2);
 
@@ -49,11 +49,7 @@ class App
             $uri = trim($uri, '/');
 
             if ($uri === '' || $uri === 'index.php') {
-                return 'inventario/index';
-            }
-
-            if (!preg_match('#^inventario(?:/|$)#', $uri)) {
-                return 'inventario/' . $uri;
+                return 'dispositivos/index';
             }
 
             return $uri;

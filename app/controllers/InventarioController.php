@@ -20,6 +20,7 @@ class InventarioController extends Controller
             'ubicaciones' => $this->model->getUbicaciones(),
             'ubicacionSeleccionada' => $ubicacion,
             'title' => 'Inventario institucional',
+            'module' => 'inventario',
         ]);
     }
 
@@ -30,6 +31,7 @@ class InventarioController extends Controller
             'item' => null,
             'modo' => 'crear',
             'ubicaciones' => $this->model->getUbicaciones(),
+            'module' => 'inventario',
         ]);
     }
 
@@ -46,6 +48,7 @@ class InventarioController extends Controller
             'item' => $item,
             'modo' => 'editar',
             'ubicaciones' => $this->model->getUbicaciones(),
+            'module' => 'inventario',
         ]);
     }
 
@@ -69,9 +72,15 @@ class InventarioController extends Controller
         ];
 
         if ($id > 0) {
-            $this->model->update($id, $data);
+            $guardado = $this->model->update($id, $data);
+            $palabra = 'actualizado';
         } else {
-            $this->model->create($data);
+            $guardado = $this->model->create($data);
+            $palabra = 'creado';
+        }
+
+        if ($guardado) {
+            $this->enviarAlWebhook(INVENTARIO_WEBHOOK_URL, $palabra);
         }
 
         redirect('inventario');
@@ -81,5 +90,26 @@ class InventarioController extends Controller
     {
         $this->model->delete($id);
         redirect('inventario');
+    }
+
+    private function enviarAlWebhook(string $url, string $palabra): void
+    {
+        if ($url === '' || !function_exists('curl_init')) {
+            return;
+        }
+
+        $ch = curl_init($url);
+
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode(['palabra' => $palabra]),
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT_MS => 500,
+            CURLOPT_TIMEOUT_MS => 1000,
+        ]);
+
+        curl_exec($ch);
+        
     }
 }

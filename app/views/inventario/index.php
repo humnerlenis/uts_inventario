@@ -59,6 +59,11 @@
                     </thead>
                     <tbody>
                         <?php foreach ($items as $item): ?>
+                            <?php $estadoClase = match (strtolower(trim((string) $item['estado']))) {
+                                'activo' => 'status-active',
+                                'dañado' => 'status-damaged',
+                                default => 'status-neutral',
+                            }; ?>
                             <tr>
                                 <td><?= (int) $item['id_inventario'] ?></td>
                                 <td><?= htmlspecialchars($item['tipo']) ?></td>
@@ -67,7 +72,7 @@
                                 <td><?= htmlspecialchars($item['ubicacion']) ?></td>
                                 <td><?= htmlspecialchars($item['color'] ?: '-') ?></td>
                                 
-                                <td><span class="status-badge"><?= htmlspecialchars($item['estado']) ?></span></td>
+                                <td><span class="status-badge <?= $estadoClase ?>"><?= htmlspecialchars($item['estado']) ?></span></td>
                                 <td><?= (int) ($item['cantidad'] ?? 0) ?></td>
                                 
                                 <td class="actions-col">

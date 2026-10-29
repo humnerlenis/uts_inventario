@@ -11,7 +11,7 @@ class InventarioModel
 
     public function getAll(string $ubicacion = ''): array
     {
-        $sql = 'SELECT * FROM public.inventario order by id_inventario';
+        $sql = 'SELECT * FROM public.inventario';
         $params = [];
 
         if ($ubicacion !== '') {

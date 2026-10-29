@@ -1,8 +1,11 @@
-# Sistema de inventario institucional
+# Sistema institucional de dispositivos e inventario
 
-Aplicación web en PHP con patrón MVC para gestionar equipos del inventario por ubicación/departamento.
+Aplicación web en PHP con patrón MVC para registrar dispositivos de red y consultar equipos del inventario institucional.
 
 ## Características
+- Registro de dispositivos en `public.dispositivos`
+- Validación de IP única y selección de interfaz `Wireless` o `Ethernet`
+- Listado de dispositivos con responsable, host, MAC e IP
 - CRUD completo para la tabla `public.inventario`
 - Diseño responsive para móvil, tablet y escritorio
 - Paleta institucional: azul, blanco y naranja
@@ -12,6 +15,7 @@ Aplicación web en PHP con patrón MVC para gestionar equipos del inventario por
 
 ## Estructura principal
 - `index.php` - entrada principal
+- `red.php` - entrada independiente para el registro de dispositivos de red
 - `app/config/config.php` - configuración global
 - `app/core/*` - base del MVC
 - `app/controllers/*` - controladores
@@ -47,4 +51,8 @@ http://localhost:8080/
 ```
 
 ## Base de datos
-Se espera una tabla llamada `public.inventario` con la estructura indicada en el enunciado.
+El archivo `database/schema.sql` contiene los esquemas de `public.inventario` y `public.dispositivos`. Si la tabla `dispositivos` ya existe, ejecuta el bloque correspondiente del archivo para crear el índice único de IP.
+
+Si la tabla ya contiene direcciones IP repetidas, PostgreSQL no podrá crear ese índice hasta que se corrijan esos registros.
+
+El registro de dispositivos de red está disponible en `/red.php`. El inventario anterior sigue disponible en `/inventario`.

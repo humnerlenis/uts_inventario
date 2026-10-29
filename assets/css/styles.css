@@ -173,7 +173,34 @@ img {
 }
 
 .field-full {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
+}
+
+.notice {
+    border-radius: 12px;
+    margin-bottom: 18px;
+    padding: 14px 18px;
+}
+
+.notice-success {
+    background: rgba(22, 163, 74, 0.1);
+    border: 1px solid rgba(22, 163, 74, 0.25);
+    color: #166534;
+}
+
+.notice-error {
+    background: rgba(220, 38, 38, 0.08);
+    border: 1px solid rgba(220, 38, 38, 0.25);
+    color: #991b1b;
+}
+
+.notice ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+}
+
+.field-error {
+    color: var(--danger);
 }
 
 label {
@@ -290,6 +317,10 @@ td {
     vertical-align: middle;
 }
 
+td {
+    font-size: 0.9rem;
+}
+
 th {
     background: var(--gray-50);
     color: var(--blue-900);
@@ -307,10 +338,23 @@ tr:hover td {
     align-items: center;
     border-radius: 999px;
     padding: 6px 10px;
-    background: rgba(22, 163, 74, 0.12);
-    color: var(--success);
     font-size: 0.78rem;
     font-weight: 700;
+}
+
+.status-active {
+    background: rgba(22, 163, 74, 0.12);
+    color: var(--success);
+}
+
+.status-damaged {
+    background: rgba(220, 38, 38, 0.12);
+    color: var(--danger);
+}
+
+.status-neutral {
+    background: rgba(88, 101, 122, 0.12);
+    color: var(--gray-600);
 }
 
 .actions-col {
@@ -440,7 +484,8 @@ tr:hover td {
     margin-bottom: 18px;
 }
 
-.inventory-form {
+.inventory-form,
+.device-form {
     display: flex;
     flex-direction: column;
     gap: 18px;
